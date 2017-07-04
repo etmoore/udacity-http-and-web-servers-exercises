@@ -15,11 +15,12 @@ class HelloHandler(BaseHTTPRequestHandler):
         # Then send headers.
         self.send_header('Content-type', 'text/plain; charset=utf-8')
         self.end_headers()
+# .send_header and end_headers are methods on the parent class, BaseHTTPRequestHandler
 
         # Now, write the response body.
         self.wfile.write("Hello, HTTP!\n".encode())
 
-if __name__ == '__main__':
-    server_address = ('', 8000)  # Serve on all addresses, port 8000.
-    httpd = HTTPServer(server_address, HelloHandler)
+if __name__ == '__main__': # If the file is being run as the "main" program...
+    server_address = ('', 8000)  # Serve on all addresses, port 8000. The right side of the assignment statement contains a "tuple"
+    httpd = HTTPServer(server_address, HelloHandler) # httpd for daemon? This is an instance of the HTTPServer class. We've handed it our handler class.
     httpd.serve_forever()
