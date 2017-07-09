@@ -31,8 +31,9 @@ class MessageHandler(BaseHTTPRequestHandler):
 
         # Read the correct amount of data from the request.
         data = self.rfile.read(length).decode()
+
         # Extract the "message" field from the request data.
-        message = parse_qs(data)["message"][0]
+        message = parse_qs(data).get("message")[0]
 
         # Escape HTML tags in the message so users can't break world+dog.
         message = message.replace("<", "&lt;")
@@ -41,6 +42,9 @@ class MessageHandler(BaseHTTPRequestHandler):
         memory.append(message)
 
         # 1. Send a 303 redirect back to the root page.
+        self.send_response(303)
+        self.send_header('location', '/')
+        self.end_headers()
 
     def do_GET(self):
         # First, send a 200 OK response.
