@@ -72,8 +72,11 @@ def CheckURI(uri, timeout=5):
     (i.e. times out).
     '''
     # 1. Write this function.  Delete the following line.
-    raise NotImplementedError("Step 1 isn't written yet.")
-
+    try:
+        r = requests.get(uri, timeout=timeout)
+        return r.status_code == 200
+    except requests.RequestException:
+        return False
 
 class Shortener(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
