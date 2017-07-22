@@ -131,10 +131,10 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             self.end_headers()
         else:
             # Didn't successfully fetch the long URI.
-
             # 4. Send a 404 error with a useful message.
-            #    Delete the following line.
-            raise NotImplementedError("Step 4 isn't written yet!")
+            self.send_response(404)
+            self.end_headers()
+            self.wfile.write("Could not fetch URI".encode())
 
 if __name__ == '__main__':
     server_address = ('', 8000)
